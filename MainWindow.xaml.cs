@@ -190,7 +190,7 @@ namespace Dictation
 
         public void GetList()
         {
-            new Task(new Action(async () =>
+            System.Threading.Tasks.Task.Run(async () =>
             {
                 List<hwtask> hwtasks = database.Select<hwtask>()
                     .Where(hwtask => hwtask.subject == LoginUser.subject)
@@ -252,11 +252,8 @@ namespace Dictation
                         ButtonAssist.SetCornerRadius(aButton, new CornerRadius(15));
                         ListPanel.Children.Add(aButton);
                     }
-
                 }));
-            })).Start();
-
-
+            });
         }
         public string[] status1={"未交","已交","已退回" };
 
@@ -282,9 +279,12 @@ namespace Dictation
                    
                     TaskName.Content = a.name;
                     TaskDate.Content = "Date : " + a.date+"     Class :"+a.classid.ToString();
-                    for(int i=0 ;i<maininfos.Count;i++){
-                        hwtasklist.Items.Add(new {Name=maininfos[i].name,StatusString=status1[(int)maininfos[i].status/10]+" "+status2[(int)maininfos[i].status%10]});
-                    }
+
+                    hwtasklist.ItemsSource = maininfos.Select(x => new
+                    {
+                        Name = x.name,
+                        StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10]
+                    });
                     
                     Main_ProgressBar.Visibility = Visibility.Collapsed;
                     UseTask();
@@ -467,8 +467,8 @@ namespace Dictation
 
         private void HomeWorkIdTextBox_TextChanged(object sender, KeyEventArgs e)
         {
-                if(HomeWorkIdTextBox.Text.Length == 11 )
-                {
+            if(HomeWorkIdTextBox.Text.Length == 11 )
+            {
                     var a = maininfos.Exists(maininfo => maininfo.hwid == long.Parse(HomeWorkIdTextBox.Text));
                     var b = StatusComboBox1.Text != "";
                 if ( StatusComboBox1.Text != "" &&
@@ -479,7 +479,7 @@ namespace Dictation
                     temp.status = StatusComboBox1.SelectedIndex * 10 + StatusComboBox2.SelectedIndex;
                     maininfos.Where(maininfo => maininfo.hwid == long.Parse(HomeWorkIdTextBox.Text))
                         .FirstOrDefault().status= StatusComboBox1.SelectedIndex * 10 + StatusComboBox2.SelectedIndex;
-                    hwtasklist.ItemsSource = null;
+                    hwtasklist.Items.Clear();
                     for (int i = 0; i < maininfos.Count; i++)
                     {
                         hwtasklist.Items.Add(new
@@ -489,7 +489,6 @@ namespace Dictation
                                            status2[(int)maininfos[i].status % 10]
                         });
                     }
-
                 }
                 else if (HomeWorkIdTextBox.Text.ToString().Substring(8) == "000")
                 {
@@ -498,10 +497,30 @@ namespace Dictation
                 else
                 {
                     
-                }}
+                }
+            }
+        }
 
-           
+        private void HomeWorkIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            if (StatusComboBox1 == null 
+                || StatusComboBox2 == null 
+                || StatusComboBox1.SelectedItem == null 
+                || StatusComboBox2.SelectedItem == null)
+                return;
 
+            if (string.IsNullOrEmpty(HomeWorkIdTextBox.Text) || HomeWorkIdTextBox.Text.Length != 11)
+                return;
+
+            maininfos.FirstOrDefault(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text))
+                .status = StatusComboBox1.SelectedIndex * 10 + StatusComboBox2.SelectedIndex;
+
+            hwtasklist.ItemsSource = null;
+            hwtasklist.ItemsSource = maininfos.Select(x => new
+            {
+                Name = x.name,
+                StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10]
+            });
         }
     }
 }

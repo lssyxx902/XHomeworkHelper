@@ -1,0 +1,140 @@
+C:\ProGram Dev\Dictation\obj\Debug\XDictation.csproj.AssemblyReference.cache
+C:\ProGram Dev\Dictation\obj\Debug\XDictation.csproj.SuggestedBindingRedirects.cache
+C:\ProGram Dev\Dictation\obj\Debug\MainWindow.g.cs
+C:\ProGram Dev\Dictation\obj\Debug\App.g.cs
+C:\ProGram Dev\Dictation\obj\Debug\Dictation_MarkupCompile.cache
+C:\ProGram Dev\Dictation\obj\Debug\Dictation_MarkupCompile.lref
+C:\ProGram Dev\Dictation\bin\Debug\Dictation.exe.config
+C:\ProGram Dev\Dictation\bin\Debug\Dictation.exe
+C:\ProGram Dev\Dictation\bin\Debug\Dictation.pdb
+C:\ProGram Dev\Dictation\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\ProGram Dev\Dictation\bin\Debug\Newtonsoft.Json.xml
+C:\ProGram Dev\Dictation\obj\Debug\App.baml
+C:\ProGram Dev\Dictation\obj\Debug\MainWindow.baml
+C:\ProGram Dev\Dictation\obj\Debug\Dictation.g.resources
+C:\ProGram Dev\Dictation\obj\Debug\Dictation.Properties.Resources.resources
+C:\ProGram Dev\Dictation\obj\Debug\XDictation.csproj.GenerateResource.cache
+C:\ProGram Dev\Dictation\obj\Debug\XDictation.csproj.CoreCompileInputs.cache
+C:\ProGram Dev\Dictation\obj\Debug\XDictation.csproj.CopyComplete
+C:\ProGram Dev\Dictation\obj\Debug\Dictation.exe
+C:\ProGram Dev\Dictation\obj\Debug\Dictation.pdb
+C:\ProGram Dev\Dictation\bin\Debug\FreeSql.xml
+C:\ProGram Dev\Dictation\bin\Debug\Google.Protobuf.xml
+C:\ProGram Dev\Dictation\bin\Debug\K4os.Compression.LZ4.xml
+C:\ProGram Dev\Dictation\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\ProGram Dev\Dictation\bin\Debug\K4os.Hash.xxHash.xml
+C:\ProGram Dev\Dictation\bin\Debug\MySql.Data.xml
+C:\ProGram Dev\Dictation\bin\Debug\System.Buffers.xml
+C:\ProGram Dev\Dictation\bin\Debug\System.Memory.xml
+C:\ProGram Dev\Dictation\bin\Debug\System.Numerics.Vectors.xml
+C:\ProGram Dev\Dictation\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\ProGram Dev\Dictation\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\ProGram Dev\Dictation\obj\Debug\XDictation.csproj.Fody.CopyLocal.cache
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\XDictation.csproj.AssemblyReference.cache
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\XDictation.csproj.SuggestedBindingRedirects.cache
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\App.g.cs
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\Dictation_MarkupCompile.cache
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\Dictation_MarkupCompile.lref
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\Dictation.exe
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\Dictation.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Dictation.exe.config
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Dictation.exe
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Dictation.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\FreeSql.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\FreeSql.Provider.MySql.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Google.Protobuf.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\K4os.Compression.LZ4.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\K4os.Hash.xxHash.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MaterialDesignColors.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MySql.Data.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Buffers.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Memory.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\ZstdNet.dll
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\FreeSql.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\FreeSql.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\FreeSql.Provider.MySql.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Google.Protobuf.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Google.Protobuf.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\K4os.Compression.LZ4.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\K4os.Hash.xxHash.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MaterialDesignColors.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\MySql.Data.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Buffers.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Memory.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Natsuraniko\Desktop\Dictation\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\MainWindow.g.cs
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\App.baml
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\MainWindow.baml
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\Dictation.g.resources
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\Dictation.Properties.Resources.resources
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\XDictation.csproj.GenerateResource.cache
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\XDictation.csproj.CoreCompileInputs.cache
+C:\Users\Natsuraniko\Desktop\Dictation\obj\Debug\XDictation.csproj.CopyComplete
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\BouncyCastle.Crypto.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\FreeSql.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\FreeSql.Provider.MySql.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\Google.Protobuf.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\K4os.Compression.LZ4.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\K4os.Hash.xxHash.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MaterialDesignColors.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MySql.Data.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\Newtonsoft.Json.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Buffers.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Memory.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Numerics.Vectors.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\Ubiety.Dns.Core.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\ZstdNet.dll
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\FreeSql.pdb
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\FreeSql.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\FreeSql.Provider.MySql.pdb
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\Google.Protobuf.pdb
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\Google.Protobuf.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\K4os.Compression.LZ4.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\K4os.Hash.xxHash.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MaterialDesignColors.pdb
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\MySql.Data.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\Newtonsoft.Json.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Buffers.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Memory.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Numerics.Vectors.xml
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XDictation.csproj.AssemblyReference.cache
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XDictation.csproj.SuggestedBindingRedirects.cache
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\MainWindow.g.cs
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\App.g.cs
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\App.baml
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\MainWindow.baml
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XDictation.csproj.GenerateResource.cache
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XDictation.csproj.CoreCompileInputs.cache
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XDictation.csproj.CopyComplete
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\XHomeWorkHelper.exe.config
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\XHomeWorkHelper.exe
+C:\ProGram Dev\XHomeworkHelper\bin\Debug\XHomeWorkHelper.pdb
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XHomeWorkHelper_MarkupCompile.cache
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XHomeWorkHelper_MarkupCompile.lref
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XHomeWorkHelper.g.resources
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XHomeWorkHelper.Properties.Resources.resources
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XHomeWorkHelper.exe
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\XHomeWorkHelper.pdb

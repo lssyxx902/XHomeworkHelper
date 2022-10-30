@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -239,7 +240,6 @@ namespace Dictation
                         {
                             Name = "TID" + hwtasks[i].id.ToString(),
                             Height = 100,
-                            Width = 985,
                             Style = (Style)(FindResource("MaterialDesignOutlinedButton")),
                             Content = maincontentGrid
                         };
@@ -261,6 +261,7 @@ namespace Dictation
             { "", "已查", "未写", "未订正", "待订正", "部分未写", "请假", "其他特殊情况","使用通用编号输入" };
 
         List<maininfo> maininfos=new List<maininfo>();
+        private hwtask a = new hwtask();
         private void Button_Main_Click(object sender, RoutedEventArgs e)
         {
             Button aButton = sender as Button;
@@ -268,7 +269,7 @@ namespace Dictation
             Main_ProgressBar.Visibility = Visibility.Visible;
             new Task(new Action(async () =>
             {
-                hwtask a = database.Select<hwtask>().Where(hwtask=>hwtask.id==hwid).ToOne();
+                a = database.Select<hwtask>().Where(hwtask=>hwtask.id==hwid).ToOne();
                 maininfos = JsonConvert.DeserializeObject<List<maininfo>>(a.info);
                 
                 await this.Dispatcher.InvokeAsync(new Action(() =>
@@ -283,7 +284,8 @@ namespace Dictation
                     hwtasklist.ItemsSource = maininfos.Select(x => new
                     {
                         Name = x.name,
-                        StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10]
+                        StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                        StudentID=x.hwid.ToString().Substring(0,8)
                     });
                     
                     Main_ProgressBar.Visibility = Visibility.Collapsed;
@@ -465,7 +467,7 @@ namespace Dictation
 
         
 
-        private void HomeWorkIdTextBox_TextChanged(object sender, KeyEventArgs e)
+       /* private void HomeWorkIdTextBox_TextChanged(object sender, KeyEventArgs e)
         {
             if(HomeWorkIdTextBox.Text.Length == 11 )
             {
@@ -499,27 +501,70 @@ namespace Dictation
                     
                 }
             }
-        }
+        }*/
 
-        private void HomeWorkIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            if (StatusComboBox1 == null 
-                || StatusComboBox2 == null 
-                || StatusComboBox1.SelectedItem == null 
-                || StatusComboBox2.SelectedItem == null)
+       private void HomeWorkIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+       {
+            if (StatusComboBox1 == null || StatusComboBox2 == null)
+               return;
+
+            if ((StatusComboBox1.SelectedItem == null && HomeWorkIdTextBox.Text.Length == 11) || (
+                    StatusComboBox2.SelectedItem == null && HomeWorkIdTextBox.Text.Length == 11))
+            {
+                MessageBox.Show("You don't choose Status !!");
                 return;
+            }
+            
+            if (HomeWorkIdTextBox.Text.Length == 11 &&
+               !maininfos.Exists(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text)))
+            {
+               MessageBox.Show("The HWID is WRONG !!");
+               return;
+            }
 
             if (string.IsNullOrEmpty(HomeWorkIdTextBox.Text) || HomeWorkIdTextBox.Text.Length != 11)
                 return;
 
+            
+
+            var amaininfo=maininfos.FirstOrDefault(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text));
             maininfos.FirstOrDefault(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text))
                 .status = StatusComboBox1.SelectedIndex * 10 + StatusComboBox2.SelectedIndex;
+
+            SnackbarTwo.Message.Content= amaininfo.hwid.ToString().Substring(0, 8) + " " + amaininfo.name + " " + status1[(int)amaininfo.status / 10] + " " + status2[(int)amaininfo.status % 10] ;
+            SnackbarTwo.IsActive = true;
+            System.Timers.Timer snackbarTimer = new System.Timers.Timer(2000);
+            snackbarTimer.Elapsed += new System.Timers.ElapsedEventHandler(Snackbarclose);
+            snackbarTimer.Start();
 
             hwtasklist.ItemsSource = null;
             hwtasklist.ItemsSource = maininfos.Select(x => new
             {
                 Name = x.name,
-                StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10]
+                StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                StudentID=x.hwid.ToString().Substring(0,8)
+            });
+
+            HomeWorkIdTextBox.Clear();
+            HomeWorkIdTextBox.Focus();
+       }
+
+        public void Snackbarclose(object a, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.InvokeAsync(new Action(() => { SnackbarTwo.IsActive = false; }));
+        }
+
+        private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                a.info = JsonConvert.SerializeObject(maininfos);
+                var Temp=database.Update<hwtask>().Set(x=>x.info,a.info).Where(x => x.id == a.id).ExecuteAffrows();
+
+                await this.Dispatcher.InvokeAsync(new Action(() =>
+                {
+
+                }));
             });
         }
     }

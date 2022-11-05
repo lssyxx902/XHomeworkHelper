@@ -4,17 +4,30 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\ProGram Dev\XHomeworkHelper\obj\Debug\
+=======
+D:\Tencent\Data\399071660\FileRecv\XHomeworkHelper (2)\obj\Debug\
+>>>>>>> d01b409ea09dd1c57542a8add1ab9153810753f8
 XHomeWorkHelper
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\ProGram Dev\XHomeworkHelper\App.xaml
 22080152624
 
 6-1331834086
 152651643192
 MainWindow.xaml;Window1.xaml;
+=======
+D:\Tencent\Data\399071660\FileRecv\XHomeworkHelper (2)\App.xaml
+1219584333
+
+51579654133
+145-1783577914
+MainWindow.xaml;
+>>>>>>> d01b409ea09dd1c57542a8add1ab9153810753f8
 
 False
 

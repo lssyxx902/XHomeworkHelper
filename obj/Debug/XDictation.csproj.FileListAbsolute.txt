@@ -231,6 +231,7 @@ D:\Tencent\Data\399071660\FileRecv\XHomeworkHelper (2)\obj\Debug\XHomeWorkHelper
 D:\Tencent\Data\399071660\FileRecv\XHomeworkHelper (2)\obj\Debug\XDictation.csproj.CopyComplete
 D:\Tencent\Data\399071660\FileRecv\XHomeworkHelper (2)\obj\Debug\XHomeWorkHelper.exe
 D:\Tencent\Data\399071660\FileRecv\XHomeworkHelper (2)\obj\Debug\XHomeWorkHelper.pdb
+<<<<<<< HEAD
 C:\ProGram Dev\XHomeworkHelper\obj\Debug\XDictation.csproj.Fody.CopyLocal.cache
 C:\ProGram Dev\XHomeworkHelper\bin\Debug\DirectShowLib-2005.dll
 C:\ProGram Dev\XHomeworkHelper\bin\Debug\EVRPresenter32.dll
@@ -239,3 +240,5 @@ C:\ProGram Dev\XHomeworkHelper\bin\Debug\zxing.xml
 C:\ProGram Dev\XHomeworkHelper\bin\Debug\zxing.presentation.xml
 C:\ProGram Dev\XHomeworkHelper\obj\Debug\Window1.g.cs
 C:\ProGram Dev\XHomeworkHelper\obj\Debug\Window1.baml
+=======
+>>>>>>> d01b409ea09dd1c57542a8add1ab9153810753f8

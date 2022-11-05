@@ -561,9 +561,13 @@ namespace Dictation
                !maininfos.Exists(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text)))
             {
                MessageBox.Show("The HWID is WRONG !!");
+<<<<<<< HEAD
                HomeWorkIdTextBox.Clear();
                HomeWorkIdTextBox.Focus();
                 return;
+=======
+               return;
+>>>>>>> d01b409ea09dd1c57542a8add1ab9153810753f8
             }
 
             if (string.IsNullOrEmpty(HomeWorkIdTextBox.Text) || HomeWorkIdTextBox.Text.Length != 11)
@@ -580,8 +584,11 @@ namespace Dictation
             System.Timers.Timer snackbarTimer = new System.Timers.Timer(2000);
             snackbarTimer.Elapsed += new System.Timers.ElapsedEventHandler(Snackbarclose);
             snackbarTimer.Start();
+<<<<<<< HEAD
             SpeechSynthesizer tts = new SpeechSynthesizer();
             tts.SpeakAsync(SnackbarTwo.Message.Content.ToString());
+=======
+>>>>>>> d01b409ea09dd1c57542a8add1ab9153810753f8
 
             hwtasklist.ItemsSource = null;
             hwtasklist.ItemsSource = maininfos.Select(x => new
@@ -589,6 +596,31 @@ namespace Dictation
                 Name = x.name,
                 StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
                 StudentID=x.hwid.ToString().Substring(0,8)
+<<<<<<< HEAD
+=======
+            });
+
+            HomeWorkIdTextBox.Clear();
+            HomeWorkIdTextBox.Focus();
+       }
+
+        public void Snackbarclose(object a, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.InvokeAsync(new Action(() => { SnackbarTwo.IsActive = false; }));
+        }
+
+        private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                a.info = JsonConvert.SerializeObject(maininfos);
+                var Temp=database.Update<hwtask>().Set(x=>x.info,a.info).Where(x => x.id == a.id).ExecuteAffrows();
+
+                await this.Dispatcher.InvokeAsync(new Action(() =>
+                {
+
+                }));
+>>>>>>> d01b409ea09dd1c57542a8add1ab9153810753f8
             });
 
             HomeWorkIdTextBox.Clear();

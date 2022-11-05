@@ -1,0 +1,30 @@
+﻿<Window x:Class="XHomeWorkHelper.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XHomeWorkHelper"
+        xmlns:controls="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+        mc:Ignorable="d"
+        Title="CaramaScanWindow" Height="520" Width="240">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <controls:VideoCaptureElement x:Name="MainVideoCaptureElement" Stretch="Fill" Width="240" Height="360" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <controls:VideoCaptureElement.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </controls:VideoCaptureElement.RenderTransform>
+            </controls:VideoCaptureElement>
+            <StackPanel Orientation="Horizontal" Height="50">
+                <Label FontFamily="Microsoft YaHei UI" FontSize="15" Height="30">摄像头：</Label>
+                <ComboBox x:Name="CamaraComboBox" Height="30" Width="150" Visibility="Visible" SelectionChanged="CamaraComboBox_Selected" ></ComboBox>
+                
+            </StackPanel>
+            <TextBox x:Name="datatextbox" IsEnabled="False" Text=""></TextBox>
+            <Button x:Name="CheckButton" Content="提交" Height="30" Width="150" Margin="10" Click="CheckButton_Click" ></Button>
+        </StackPanel>
+    </Grid>
+</Window>

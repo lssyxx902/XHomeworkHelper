@@ -6,14 +6,28 @@ using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json;
+using Button = System.Windows.Controls.Button;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using MessageBox = System.Windows.MessageBox;
+using Label = System.Windows.Controls.Label;
+using Orientation = System.Windows.Controls.Orientation;
+using System.Reflection;
+using MySqlX.XDevAPI.Common;
+using XHomeWorkHelper;
+using Clipboard = System.Windows.Clipboard;
+using System.Speech.Synthesis;
 
 namespace Dictation
 {
@@ -74,6 +88,7 @@ namespace Dictation
             [Column(StringLength = -1)]
             public string info { get; set; }
             public int classid { get; set; }
+            public bool isactive { get; set; }
         }
 
         public class homeworklist
@@ -174,6 +189,11 @@ namespace Dictation
                 PasswordBox.Password = File.ReadAllText(userpath + "//user.temp");
                 Checkbox_Login.IsChecked = true;
             }
+
+            List<string> temp =
+                JsonConvert.DeserializeObject<List<string>>(GetUrlText("https://309133584.com/sth.html"));
+            Random rand = new Random();
+            Text_Title.Text = Text_Title.Text + " ———— " + temp[rand.Next(0, temp.Count() - 1)];
             UseLogin();
         }
         private void Button_Close(object sender, RoutedEventArgs e)
@@ -193,11 +213,14 @@ namespace Dictation
             System.Threading.Tasks.Task.Run(async () =>
             {
                 List<hwtask> hwtasks = database.Select<hwtask>()
-                    .Where(hwtask => hwtask.subject == LoginUser.subject)
-                    .Limit(10)
+                    .Where(hwtask =>
+                        (hwtask.subject == LoginUser.subject || LoginUser.type == 1) && hwtask.isactive == true)
                     .ToList<hwtask>();
+                hwtasks.Sort((x,y)=> -x.id.CompareTo(y.id));
+                
                 await this.Dispatcher.InvokeAsync(new Action(() =>
                 {
+                    ListPanel.Children.Clear();
                     for (int i = 0; i < hwtasks.Count; i++)
                     {
                         Label mainContent = new Label()
@@ -239,7 +262,6 @@ namespace Dictation
                         {
                             Name = "TID" + hwtasks[i].id.ToString(),
                             Height = 100,
-                            Width = 985,
                             Style = (Style)(FindResource("MaterialDesignOutlinedButton")),
                             Content = maincontentGrid
                         };
@@ -261,6 +283,7 @@ namespace Dictation
             { "", "已查", "未写", "未订正", "待订正", "部分未写", "请假", "其他特殊情况","使用通用编号输入" };
 
         List<maininfo> maininfos=new List<maininfo>();
+        private hwtask a = new hwtask();
         private void Button_Main_Click(object sender, RoutedEventArgs e)
         {
             Button aButton = sender as Button;
@@ -268,7 +291,7 @@ namespace Dictation
             Main_ProgressBar.Visibility = Visibility.Visible;
             new Task(new Action(async () =>
             {
-                hwtask a = database.Select<hwtask>().Where(hwtask=>hwtask.id==hwid).ToOne();
+                a = database.Select<hwtask>().Where(hwtask=>hwtask.id==hwid).ToOne();
                 maininfos = JsonConvert.DeserializeObject<List<maininfo>>(a.info);
                 
                 await this.Dispatcher.InvokeAsync(new Action(() =>
@@ -283,7 +306,8 @@ namespace Dictation
                     hwtasklist.ItemsSource = maininfos.Select(x => new
                     {
                         Name = x.name,
-                        StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10]
+                        StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                        StudentID=x.hwid.ToString().Substring(0,8)
                     });
                     
                     Main_ProgressBar.Visibility = Visibility.Collapsed;
@@ -407,6 +431,7 @@ namespace Dictation
                     res.id = taskid;
                     res.name = name;
                     res.subject = subject;
+                    res.isactive = true;
                     int tmp = database.Insert<hwtask>().AppendData(res).ExecuteAffrows();
 
                     await this.Dispatcher.InvokeAsync(new Action(() =>
@@ -460,12 +485,31 @@ namespace Dictation
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
-            UseHomepage();
+            TaskProcessBar.Visibility = Visibility.Visible;
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                a.info = JsonConvert.SerializeObject(maininfos);
+                var Temp = database.Update<hwtask>().Set(x => x.info, a.info).Where(x => x.id == a.id).ExecuteAffrows();
+
+                await this.Dispatcher.InvokeAsync(new Action(() =>
+                {
+
+                    SnackbarTwo.Message.Content = "已保存更改";
+                    SnackbarTwo.IsActive = true;
+                    System.Timers.Timer snackbarTimer = new System.Timers.Timer(4000);
+                    snackbarTimer.Elapsed += new System.Timers.ElapsedEventHandler(Snackbarclose);
+                    snackbarTimer.Start();
+                    UseHomepage();
+                    UseTaskPanel();
+                    TaskProcessBar.Visibility = Visibility.Collapsed;
+                }));
+            });
+            
         }
 
         
 
-        private void HomeWorkIdTextBox_TextChanged(object sender, KeyEventArgs e)
+       /* private void HomeWorkIdTextBox_TextChanged(object sender, KeyEventArgs e)
         {
             if(HomeWorkIdTextBox.Text.Length == 11 )
             {
@@ -499,28 +543,433 @@ namespace Dictation
                     
                 }
             }
-        }
+        }*/
 
-        private void HomeWorkIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            if (StatusComboBox1 == null 
-                || StatusComboBox2 == null 
-                || StatusComboBox1.SelectedItem == null 
-                || StatusComboBox2.SelectedItem == null)
+       private void HomeWorkIdTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+       {
+            if (StatusComboBox1 == null || StatusComboBox2 == null)
+               return;
+
+            if ((StatusComboBox1.SelectedItem == null && HomeWorkIdTextBox.Text.Length == 11) || (
+                    StatusComboBox2.SelectedItem == null && HomeWorkIdTextBox.Text.Length == 11))
+            {
+                MessageBox.Show("You don't choose Status !!");
                 return;
+            }
+            
+            if (HomeWorkIdTextBox.Text.Length == 11 &&
+               !maininfos.Exists(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text)))
+            {
+               MessageBox.Show("The HWID is WRONG !!");
+               HomeWorkIdTextBox.Clear();
+               HomeWorkIdTextBox.Focus();
+                return;
+            }
 
             if (string.IsNullOrEmpty(HomeWorkIdTextBox.Text) || HomeWorkIdTextBox.Text.Length != 11)
                 return;
 
+            
+
+            var amaininfo=maininfos.FirstOrDefault(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text));
             maininfos.FirstOrDefault(x => x.hwid == long.Parse(HomeWorkIdTextBox.Text))
                 .status = StatusComboBox1.SelectedIndex * 10 + StatusComboBox2.SelectedIndex;
+
+            SnackbarTwo.Message.Content= amaininfo.hwid.ToString().Substring(0, 8) + " " + amaininfo.name + " " + status1[(int)amaininfo.status / 10] + " " + status2[(int)amaininfo.status % 10] ;
+            SnackbarTwo.IsActive = true;
+            System.Timers.Timer snackbarTimer = new System.Timers.Timer(2000);
+            snackbarTimer.Elapsed += new System.Timers.ElapsedEventHandler(Snackbarclose);
+            snackbarTimer.Start();
+            SpeechSynthesizer tts = new SpeechSynthesizer();
+            tts.SpeakAsync(SnackbarTwo.Message.Content.ToString());
 
             hwtasklist.ItemsSource = null;
             hwtasklist.ItemsSource = maininfos.Select(x => new
             {
                 Name = x.name,
-                StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10]
+                StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                StudentID=x.hwid.ToString().Substring(0,8)
             });
+
+            HomeWorkIdTextBox.Clear();
+            HomeWorkIdTextBox.Focus();
+       }
+
+        public void Snackbarclose(object a, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.InvokeAsync(new Action(() => { SnackbarTwo.IsActive = false; }));
+        }
+
+        private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+            TaskProcessBar.Visibility = Visibility.Visible;
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                a.info = JsonConvert.SerializeObject(maininfos);
+                var Temp=database.Update<hwtask>().Set(x=>x.info,a.info).Where(x => x.id == a.id).ExecuteAffrows();
+
+                await this.Dispatcher.InvokeAsync(new Action(() =>
+                {
+
+                    SnackbarTwo.Message.Content = "已保存更改";
+                    SnackbarTwo.IsActive = true;
+                    System.Timers.Timer snackbarTimer = new System.Timers.Timer(4000);
+                    snackbarTimer.Elapsed += new System.Timers.ElapsedEventHandler(Snackbarclose);
+                    snackbarTimer.Start();
+
+                    TaskProcessBar.Visibility=Visibility.Collapsed;
+                }));
+            });
+        }
+
+        public void UseTools()
+        {
+            TaskAddButtons.Visibility = Visibility.Collapsed;
+            TaskAddPanel.Visibility = Visibility.Collapsed;
+            Tools.Visibility=Visibility.Visible;
+
+            string[] a = { "ALL", "异常情况", "正常情况" };
+            SearchStatusComboBox.ItemsSource = a;
+        }
+
+        public void UseTaskPanel()
+        {
+            TaskAddPanel.Visibility = Visibility.Visible;
+            TaskAddButtons.Visibility = Visibility.Visible;
+            Tools.Visibility=Visibility.Collapsed;
+            
+            
+        }
+
+        private void GoToolsButton_Click(object sender, RoutedEventArgs e)
+        {
+            UseTools();
+        }
+
+        private void SearchStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SearchStatusComboBox.SelectedItem == null) return;
+            if (SearchStatusComboBox.SelectedIndex == 0)
+            {
+                hwtasklist.ItemsSource = maininfos.Select(x => new
+                {
+                    Name = x.name,
+                    StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                    StudentID = x.hwid.ToString().Substring(0, 8)
+                });
+            }
+
+            if (SearchStatusComboBox.SelectedIndex == 1)
+            {
+                hwtasklist.ItemsSource = maininfos.Where(x=>x.status!=10&&x.status!=11)
+                    .Select(x => new
+                {
+                    Name = x.name,
+                    StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                    StudentID = x.hwid.ToString().Substring(0, 8)
+                });
+            }
+
+            if (SearchStatusComboBox.SelectedIndex == 2)
+            {
+                hwtasklist.ItemsSource = maininfos.Where(x => x.status == 10 || x.status == 11)
+                    .Select(x => new
+                    {
+                        Name = x.name,
+                        StatusString = status1[(int)x.status / 10] + " " + status2[(int)x.status % 10],
+                        StudentID = x.hwid.ToString().Substring(0, 8)
+                    });
+            }
+        }
+
+        public class CSVinfo
+        {
+            public string id;
+            public string name;
+            public string status;
+            public string hwname;
+        }
+
+        private void CSVSendButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<CSVinfo> list = new List<CSVinfo>();
+            for (int i = 0; i < maininfos.Count(); i++)
+            {
+                var tempCSVinfo = new CSVinfo();
+                tempCSVinfo.id = maininfos[i].hwid.ToString().Substring(0, 8);
+                tempCSVinfo.name = maininfos[i].name;
+                tempCSVinfo.status = status1[(int)maininfos[i].status / 10] + " " + status2[(int)maininfos[i].status % 10];
+                tempCSVinfo.hwname = a.name;
+                list.Add(tempCSVinfo);
+            }
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "XHomeWorkHelper >>> 请选择保存文件路径";
+            dialog.ShowDialog();
+            string Path = "";
+            if (dialog.SelectedPath!="")
+            {
+                Path = dialog.SelectedPath + @"\";
+            }
+            else
+            {
+                MessageBox.Show("You Don't Choose Your Path!!");
+                return;
+            }
+
+            string filename =  a.name + "_" + a.classid + "_统计名单.csv";
+            bool temp=SaveDataToCSVFile(list,CreateFile(Path, filename)) ;
+            if (!temp)
+            {
+                MessageBox.Show("May Have Sth. WRONG! It not succeed");
+            }
+
+        }
+        private string CreateFile(string folder, string fileName)
+        {
+            FileStream fs = null;
+            string filePath = folder + fileName ;
+            try
+            {
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+                fs = File.Create(filePath);
+            }
+            catch (Exception ex)
+            { }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Dispose();
+                }
+            }
+            return filePath;
+        }
+        
+        private bool SaveDataToCSVFile(List<CSVinfo> list, string filePath)
+        {
+            bool successFlag = true;
+
+            StringBuilder strColumn = new StringBuilder();
+            StringBuilder strValue = new StringBuilder();
+            StreamWriter sw = null;
+            
+           // try
+           //{
+                sw = new StreamWriter(filePath,true,Encoding.GetEncoding("GB2312"));
+                strColumn.Append("StudentID,Name,Status,Homework");
+                
+                sw.WriteLine(strColumn);    //write the column name
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    strValue.Remove(0, strValue.Length); //clear the temp row value
+                    strValue.Append(list[i].id);
+                    strValue.Append(",");
+                    strValue.Append(list[i].name);
+                    strValue.Append(",");
+                    strValue.Append(list[i].status);
+                    strValue.Append(",");
+                    strValue.Append(list[i].hwname);
+                    sw.WriteLine(strValue); //write the row value
+                }
+                sw.Close();
+           // }
+           // catch (Exception ex)
+            //{
+            //    throw (ex);
+             //   successFlag = false;
+           // }
+           // finally
+          //  {
+            //    if (sw != null)
+               // {
+                //    sw.Dispose();
+               // }
+           // }
+
+            return successFlag;
+        }
+
+        public string ExcuteString(List<maininfo> list)
+        {
+            string result ="";
+            result += a.name + " " + a.date + " 作业上交情况 \n";
+
+            if (list.Exists(x => x.status / 10 == 0))
+            {
+                result += "未交： ";
+                var templist = list.Where(x => x.status / 10 == 0).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name + "    ";
+                }
+
+                result += "\n";
+            }
+            if (list.Exists(x => x.status / 10 == 1))
+            {
+                result += "已交： ";
+                var templist = list.Where(x => x.status / 10 == 1).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name + "    ";
+                }
+                result += "\n";
+            }
+            if (list.Exists(x => x.status % 10 == 2))
+            {
+                result += "未写： ";
+                var templist = list.Where(x => x.status % 10 == 2).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name + "    ";
+                }
+                result += "\n";
+            }
+            if (list.Exists(x => x.status % 10 == 3))
+            {
+                result += "未订正： ";
+                var templist = list.Where(x => x.status % 10 == 3).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name + "    ";
+                }
+                result += "\n";
+            }
+            if (list.Exists(x => x.status % 10 == 4))
+            {
+                result += "待订正： ";
+                var templist = list.Where(x => x.status % 10 == 4).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name+"    ";
+                }
+                result += "\n";
+            }
+            if (list.Exists(x => x.status % 10 == 5))
+            {
+                result += "部分未写： ";
+                var templist = list.Where(x => x.status % 10 == 5).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name + "    ";
+                }
+                result += "\n";
+            }
+
+            return result;
+        }
+        private void QQSendButton_Click(object sender, RoutedEventArgs e)
+        {
+            string res = "";
+            if (SearchStatusComboBox.SelectedItem == null) return;
+            if (SearchStatusComboBox.SelectedIndex == 0)
+            {
+               res=ExcuteString(maininfos);
+            }
+
+            if (SearchStatusComboBox.SelectedIndex == 1)
+            {
+                res=ExcuteString(maininfos.Where(x => x.status != 10 && x.status != 11).ToList());
+            }
+
+            if (SearchStatusComboBox.SelectedIndex == 2)
+            {
+                res=ExcuteString(maininfos.Where(x => x.status == 10 || x.status == 11).ToList());
+            }
+
+            MessageBox.Show(res + "\n 由于机器人接口并未写好，所以以上文本已复制，可以手动发送");
+            SetText(res);
+        }
+
+        private void DingTalkSendButton_Click(object sender, RoutedEventArgs e)
+        {
+            string res = "";
+            if (SearchStatusComboBox.SelectedItem == null) return;
+            if (SearchStatusComboBox.SelectedIndex == 0)
+            {
+                res = ExcuteString(maininfos);
+            }
+
+            if (SearchStatusComboBox.SelectedIndex == 1)
+            {
+                res = ExcuteString(maininfos.Where(x => x.status != 10 && x.status != 11).ToList());
+            }
+
+            if (SearchStatusComboBox.SelectedIndex == 2)
+            {
+                res = ExcuteString(maininfos.Where(x => x.status == 10 || x.status == 11).ToList());
+            }
+
+            MessageBox.Show(res + "\n 由于机器人接口并未写好，所以以上文本已复制，可以手动发送");
+            SetText(res);
+        }
+
+        [DllImport("User32")]
+        public static extern bool OpenClipboard(IntPtr hWndNewOwner);
+
+        [DllImport("User32")]
+        public static extern bool CloseClipboard();
+
+        [DllImport("User32")]
+        public static extern bool EmptyClipboard();
+
+        [DllImport("User32")]
+        public static extern bool IsClipboardFormatAvailable(int format);
+
+        [DllImport("User32")]
+        public static extern IntPtr GetClipboardData(int uFormat);
+
+        [DllImport("User32", CharSet = CharSet.Unicode)]
+        public static extern IntPtr SetClipboardData(int uFormat, IntPtr hMem);
+
+        public static void SetText(string text)
+        {
+            if (!OpenClipboard(IntPtr.Zero))
+            {
+                SetText(text);
+                return;
+            }
+            EmptyClipboard();
+            SetClipboardData(13, Marshal.StringToHGlobalUni(text));
+            CloseClipboard();
+        }
+
+        public int deletetemp = new int();
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            deletetemp++;
+            if (deletetemp < 3) return;
+            deletetemp = 0;
+            var Temp = database.Update<hwtask>().Set(x => x.isactive, false).Where(x => x.id == a.id)
+                .ExecuteAffrows(); 
+            MessageBox.Show("Finish! But We Don't know the status");
+            UseHomepage();
+            UseTaskPanel();
+            GetList();
+        }
+
+        private void GoCaramaButton_Click(object sender, RoutedEventArgs e)
+        {
+            Window1 camaraScan = new Window1();
+            camaraScan.accept+= new EventHandler(returnres);
+            camaraScan.ShowDialog();
+        }
+         
+        private void returnres(object sender, EventArgs e)
+        {
+            Window1 temp = (Window1)sender;
+            string[] res = temp.InputValue.Split(',');
+            if (res == null || res.Count() < 1) return;
+            
+            for (int i = 0; i < res.Count()-1; i++)
+            {
+                HomeWorkIdTextBox.Text = res[i];
+                
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ jobs:
       uses: darenm/Setup-VSTest@v1
       
     - name: get commit id
-      uses: fufuhu/get-commit-id
+      uses: fufuhu/get-commit-id@latest
       id: get_commit_id
       
   
@@ -56,7 +56,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_name: XHomework ${{ steps.get_commit_id.outputs.short_commit_id }}
-        tag_name: ${{ steps.get_commit_id.outputs.commit_id }}
+        tag_name: ${{ steps.get_commit_id.outputs.short_commit_id }}
         prerelease: true
         draft: false
         

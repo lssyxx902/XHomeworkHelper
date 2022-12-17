@@ -33,7 +33,7 @@ jobs:
       uses: darenm/Setup-VSTest@v1
       
     - name: get commit id
-      uses: fufuhu/get-commit-id@v1
+      uses: fufuhu/get-commit-id
       id: get_commit_id
       
   
@@ -55,7 +55,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        release_name: XHomework ${{ steps.get_commit_id.outputs.commit_id }}
+        release_name: XHomework ${{ steps.get_commit_id.outputs.short_commit_id }}
         tag_name: ${{ steps.get_commit_id.outputs.commit_id }}
         prerelease: true
         draft: false
@@ -68,6 +68,6 @@ jobs:
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: XHomeWorkHelper.zip
-          asset_name: XHomeworkHelper ${{ steps.get_commit_id.outputs.commit_id }} .zip
+          asset_name: XHomeworkHelper ${{ steps.get_commit_id.outputs.short_commit_id }} .zip
           asset_content_type: application/zip
     

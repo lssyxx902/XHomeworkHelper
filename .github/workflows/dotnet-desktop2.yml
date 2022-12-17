@@ -41,8 +41,8 @@ jobs:
     - name: Zip
       uses: vimtor/action-zip@v1
       with:
-        files: ./bin/Release/${{ github.event.repository }}.exe
-        dest: ${{ github.event.repository }}.zip
+        files: ./bin/Release/XHomeworkHelper.exe
+        dest: XHomeWorkHelper.zip
         
     - name: Create Pre-release
       id: create_release
@@ -50,7 +50,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        release_name: ${{ github.event.repository }} Pre/${{ github.sha }}
+        release_name: XHomework Pre/${{ github.sha }}
         tag_name: PreRelease
         prerelease: true
         draft: false
@@ -63,7 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.event.repository }}.zip
-          asset_name: ${{ github.event.repository }}.${{ github.sha }}.zip
+          asset_path: XHomeWorkHelper.zip
+          asset_name: XHomeworkHelper ${{ github.sha }}.zip
           asset_content_type: application/zip
     

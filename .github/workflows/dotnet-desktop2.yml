@@ -31,13 +31,7 @@ jobs:
         
     - name: Setup VSTest
       uses: darenm/Setup-VSTest@v1
-      
-    - name: get commit id
-      run: | 
-        echo "commit_id=git rev-parse --short HEAD">> $GITHUB_OUTPUT
-      id: get_commit_id
-      
-  
+    
     - name: Restore Solution
       run: nuget restore Dictation.sln
       
@@ -56,10 +50,13 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        release_name: XHomework ${{ steps.get_commit_id.output.commit_id }}
-        tag_name: PreRelease
+        release_name: XHomework Pre/${{ github.sha }}
+        tag_name: Pre/${{ github.sha }}
         prerelease: true
         draft: false
+        body: |
+          Github Action || PreRelease in ${{ github.sha }} || {{date +%Y-%m-%d}}
+          ${{jq.commit.message $GITHUB_EVENT_PATH}}
         
     - name: Upload Release Asset
       id: upload-release-asset 
@@ -69,6 +66,6 @@ jobs:
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: XHomeWorkHelper.zip
-          asset_name: XHomeworkHelper ${{ steps.get_commit_id.output.commit_id }} .zip
+          asset_name: XHomeworkHelper ${{ github.sha }}${{date +%Y-%m-%d}}.zip
           asset_content_type: application/zip
     

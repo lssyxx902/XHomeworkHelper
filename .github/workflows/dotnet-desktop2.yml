@@ -55,8 +55,7 @@ jobs:
         prerelease: true
         draft: false
         body: |
-          Github Action || PreRelease in ${{ github.sha }} || {{date +%Y-%m-%d}}
-        
+          Github Action || PreRelease in ${{ github.sha }} 
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -65,6 +64,6 @@ jobs:
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: XHomeWorkHelper.zip
-          asset_name: XHomeworkHelper ${{ github.sha }}${{date +%Y-%m-%d}}.zip
+          asset_name: XHomeworkHelper ${{ github.sha }}.zip
           asset_content_type: application/zip
     

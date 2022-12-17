@@ -56,8 +56,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        release_name: XHomework ${{ steps.get_commit_id.outputs.commit_id }}
-        tag_name: main/${{ steps.get_commit_id.outputs.commit_id }}
+        release_name: XHomework ${{ github.hash }}
+        tag_name: main/${{ github.hash }}
         prerelease: true
         draft: false
         
@@ -69,6 +69,6 @@ jobs:
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: XHomeWorkHelper.zip
-          asset_name: XHomeworkHelper ${{ steps.get_commit_id.outputs.commit_id }} .zip
+          asset_name: XHomeworkHelper ${{ github.hash }} .zip
           asset_content_type: application/zip
     

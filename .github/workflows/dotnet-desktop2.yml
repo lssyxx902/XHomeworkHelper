@@ -56,6 +56,7 @@ jobs:
         draft: false
         body: |
           Github Action || PreRelease in ${{ github.sha }} 
+      continue-on-error: true
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -66,4 +67,5 @@ jobs:
           asset_path: XHomeWorkHelper.zip
           asset_name: XHomeworkHelper ${{ github.sha }}.zip
           asset_content_type: application/zip
+      continue-on-error: true
     

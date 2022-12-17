@@ -34,7 +34,7 @@ jobs:
       
     - name: get commit id
       run: | 
-        echo "::set-output name=commit_id::git rev-parse --short HEAD"
+        echo "commit_id=git rev-parse --short HEAD">> $GITHUB_OUTPUT
       id: get_commit_id
       
   
@@ -57,7 +57,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_name: XHomework ${{ steps.get_commit_id.outputs.commit_id }}
-        tag_name: ${{ steps.get_commit_id.outputs.commit_id }}
+        tag_name: main/${{ steps.get_commit_id.outputs.commit_id }}
         prerelease: true
         draft: false
         

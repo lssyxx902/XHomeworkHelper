@@ -239,3 +239,5 @@ C:\ProGram Dev\XHomeworkHelper\bin\Debug\zxing.xml
 C:\ProGram Dev\XHomeworkHelper\bin\Debug\zxing.presentation.xml
 C:\ProGram Dev\XHomeworkHelper\obj\Debug\Window1.g.cs
 C:\ProGram Dev\XHomeworkHelper\obj\Debug\Window1.baml
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\Window2.g.cs
+C:\ProGram Dev\XHomeworkHelper\obj\Debug\Window2.baml

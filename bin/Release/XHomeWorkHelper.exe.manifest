@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="XHomeWorkHelper.exe" size="8364488">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="XHomeWorkHelper.exe" size="8367560">
       <assemblyIdentity name="XHomeWorkHelper" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IBEU8hvMzF1Df8K6/uhnSpkymZVkzUQKbCpmmzxMNEI=</dsig:DigestValue>
+        <dsig:DigestValue>sLFrSs15MMO4sMQpNTUBw6PUtcO2DTL7FuB5I17U5L4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -75,13 +75,13 @@
       <dsig:DigestValue>GUL5rEShdqzZZz+nPKk6kNjbtPC9r77dQcScEIcorLU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="XHomeWorkHelper.exe.config" size="565">
+  <file name="XHomeWorkHelper.exe.config" size="552">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>KgVDbvLTnrGqv/bJep8nqNqmI3Qhdr1KgezDEArnBaw=</dsig:DigestValue>
+      <dsig:DigestValue>9MkSZCAapjHf5rCdUZRBXA/u64jtX9I4ddnQnxqsheo=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

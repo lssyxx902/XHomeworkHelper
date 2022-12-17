@@ -395,10 +395,8 @@
                             Grid.Row="2"
                             Margin="0,20,0,0"
                             ScrollViewer.CanContentScroll="True"
-                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                            ScrollViewer.VerticalScrollBarVisibility="Visible"
-                            VirtualizingPanel.IsVirtualizing="True"
-                            VirtualizingPanel.VirtualizationMode="Recycling">
+                            ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                            ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="hwtasklist_SelectionChanged">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn
@@ -410,6 +408,7 @@
                                         Width="200"
                                         DisplayMemberBinding="{Binding Name}"
                                         Header="Name" />
+
                                     <GridViewColumn DisplayMemberBinding="{Binding StatusString}" Header="Status" />
                                 </GridView>
                             </ListView.View>

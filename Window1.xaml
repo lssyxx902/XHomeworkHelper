@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:XHomeWorkHelper"
         xmlns:controls="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
         mc:Ignorable="d"
-        Title="CaramaScanWindow" Height="520" Width="240">
+        Title="CameraScanWindow" Height="377" Width="369">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <controls:VideoCaptureElement x:Name="MainVideoCaptureElement" Stretch="Fill" Width="240" Height="360" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <controls:VideoCaptureElement x:Name="MainVideoCaptureElement" Stretch="Fill" Width="360" Height="240" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <controls:VideoCaptureElement.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -21,7 +21,7 @@
             <StackPanel Orientation="Horizontal" Height="50">
                 <Label FontFamily="Microsoft YaHei UI" FontSize="15" Height="30">摄像头：</Label>
                 <ComboBox x:Name="CamaraComboBox" Height="30" Width="150" Visibility="Visible" SelectionChanged="CamaraComboBox_Selected" ></ComboBox>
-                
+
             </StackPanel>
             <TextBox x:Name="datatextbox" IsEnabled="False" Text=""></TextBox>
             <Button x:Name="CheckButton" Content="提交" Height="30" Width="150" Margin="10" Click="CheckButton_Click" ></Button>

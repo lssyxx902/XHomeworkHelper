@@ -298,6 +298,8 @@ namespace Dictation
                 {
                     StatusComboBox1.ItemsSource = status1;
                     StatusComboBox2.ItemsSource = status2;
+                    StatusComboBox1.SelectedIndex = 1;
+                    StatusComboBox2.SelectedIndex = 0;
                     HomeWorkIdTextBox.Text = "";
                    
                     TaskName.Content = a.name;
@@ -565,8 +567,13 @@ namespace Dictation
                HomeWorkIdTextBox.Focus();
                 return;
             }
+            if (HomeWorkIdTextBox.Text.Length == 3 && HomeWorkIdTextBox.Text[0] == '*')
+            {
+                HomeWorkIdTextBox.Text = maininfos.FirstOrDefault(x => x.hwid.ToString().Contains("202002" + HomeWorkIdTextBox.Text.Substring(1))).hwid.ToString();
+                return;
+            }
 
-            if (string.IsNullOrEmpty(HomeWorkIdTextBox.Text) || HomeWorkIdTextBox.Text.Length != 11)
+            if (string.IsNullOrEmpty(HomeWorkIdTextBox.Text) || HomeWorkIdTextBox.Text.Length != 11 )
                 return;
 
             
@@ -581,7 +588,7 @@ namespace Dictation
             snackbarTimer.Elapsed += new System.Timers.ElapsedEventHandler(Snackbarclose);
             snackbarTimer.Start();
             SpeechSynthesizer tts = new SpeechSynthesizer();
-            tts.SpeakAsync(SnackbarTwo.Message.Content.ToString());
+            tts.SpeakAsync(amaininfo.name);
 
             hwtasklist.ItemsSource = null;
             hwtasklist.ItemsSource = maininfos.Select(x => new
@@ -630,6 +637,7 @@ namespace Dictation
 
             string[] a = { "ALL", "异常情况", "正常情况" };
             SearchStatusComboBox.ItemsSource = a;
+            SearchStatusComboBox.SelectedIndex = -1;
         }
 
         public void UseTaskPanel()
@@ -801,7 +809,7 @@ namespace Dictation
             if (list.Exists(x => x.status / 10 == 0))
             {
                 result += "未交： ";
-                var templist = list.Where(x => x.status / 10 == 0).ToList();
+                var templist = list.Where(x => x.status / 10 == 0 && x.status%10 == 0).ToList();
                 for (int i = 0; i < templist.Count(); i++)
                 {
                     result += templist[i].name + "    ";
@@ -853,6 +861,16 @@ namespace Dictation
             {
                 result += "部分未写： ";
                 var templist = list.Where(x => x.status % 10 == 5).ToList();
+                for (int i = 0; i < templist.Count(); i++)
+                {
+                    result += templist[i].name + "    ";
+                }
+                result += "\n";
+            }
+            if (list.Exists(x => x.status % 10 == 6))
+            {
+                result += "请假： ";
+                var templist = list.Where(x => x.status % 10 == 6).ToList();
                 for (int i = 0; i < templist.Count(); i++)
                 {
                     result += templist[i].name + "    ";
@@ -968,6 +986,15 @@ namespace Dictation
             for (int i = 0; i < res.Count()-1; i++)
             {
                 HomeWorkIdTextBox.Text = res[i];
+            }
+        }
+
+        private void hwtasklist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (hwtasklist.SelectedItem != null)
+            {
+                object selectedItem = hwtasklist.SelectedItem;
+
                 
             }
         }

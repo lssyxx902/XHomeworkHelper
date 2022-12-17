@@ -66,3 +66,5 @@ C:\ProGram Dev\XHomeworkHelper\bin\Release\zxing.xml
 C:\ProGram Dev\XHomeworkHelper\bin\Release\zxing.presentation.xml
 C:\ProGram Dev\XHomeworkHelper\obj\Release\Window1.g.cs
 C:\ProGram Dev\XHomeworkHelper\obj\Release\Window1.baml
+C:\ProGram Dev\XHomeworkHelper\obj\Release\Window2.g.cs
+C:\ProGram Dev\XHomeworkHelper\obj\Release\Window2.baml

@@ -51,7 +51,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_name: XHomework Pre/${{ github.sha }}
-        tag_name: PreRelease
+        tag_name: Pre/${{ github.sha }}
         prerelease: true
         draft: false
         body: |

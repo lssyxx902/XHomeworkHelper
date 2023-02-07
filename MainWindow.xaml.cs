@@ -191,7 +191,7 @@ namespace Dictation
             }
 
             List<string> temp =
-                JsonConvert.DeserializeObject<List<string>>(GetUrlText("https://309133584.com/sth.html"));
+                JsonConvert.DeserializeObject<List<string>>(GetUrlText("https://www.309133584.com/sth.html"));
             Random rand = new Random();
             Text_Title.Text = Text_Title.Text + " ———— " + temp[rand.Next(0, temp.Count() - 1)];
             UseLogin();

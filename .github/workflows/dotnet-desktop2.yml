@@ -67,5 +67,9 @@ jobs:
           asset_path: XHomeWorkHelper.zip
           asset_name: XHomeworkHelper ${{ github.sha }}.zip
           asset_content_type: application/zip
-      continue-on-error: true
+    - name: Capture artifacts
+      uses: actions/upload-artifact@main
+      with:
+          name: Resource
+          path: ./bin/Release/XHomeworkHelper.exe
     

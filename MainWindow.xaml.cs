@@ -61,7 +61,7 @@ namespace Dictation
             public string name { get; set; }
             public int id { get; set; }
             public int subject { get; set; } //Sci=0,Chi=1
-            public int type { get; set; } //tch=0,kdb=1
+            public int type { get; set; } //tch=0,kdb=
             public string password { get; set; }
         }
 
